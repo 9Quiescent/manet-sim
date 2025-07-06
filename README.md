@@ -12,7 +12,19 @@ An open-source, lightweight project for real-time visualisation and simulation o
 
 -**Docker-ready:** Run nodes in isolated containers to simulate distributed deployments.
 
-# USAGE WITHOUT DOCKER
+## Prerequisite: Docker Installation
+To avoid OS-specific quirks and needing to manually install dependencies, ensure you have docker installed to on your machine. This will let you run a sandboxed version of the program suited to your operating system, please install Docker for your platform:
+
+- **[Docker Desktop for Mac](https://www.docker.com/products/docker-desktop/)**
+- **[Docker Desktop for Windows](https://www.docker.com/products/docker-desktop/)**
+- **[Docker for Linux](https://docs.docker.com/engine/install/)**
+
+After installing, launch Docker Desktop (if needed) and ensure the `docker` command works in your terminal:
+```bash
+docker --version
+```
+
+# USAGE WITHOUT DOCKER (Manual)
 ## Clone The Project
 Open A Terminal and run the following commands to clone the repository:
 ```bash
@@ -29,7 +41,7 @@ Then run the simulator using this command.:
 
 python main.py
 
-# USAGE WITH DOCKER
+# USAGE WITH DOCKER (Automatic)
 ## Clone The Project
 Open A Terminal and run the following commands to clone the repository:
 ```bash
