@@ -16,7 +16,7 @@ An open-source, lightweight project for real-time visualisation and simulation o
 ## Clone The Project
 Open A Terminal and run the following commands to clone the repository:
 ```bash
-git clone https://github.com/9quiescent/manet-sim.git
+git clone https://github.com/9Quiescent/manet-sim.git
 cd manet-sim
 ```
 ## Install Project Dependencies
@@ -33,7 +33,7 @@ python main.py
 ## Clone The Project
 Open A Terminal and run the following commands to clone the repository:
 ```bash
-git clone https://github.com/9quiescent/manet-sim.git
+git clone https://github.com/9Quiescent/manet-sim.git
 cd manet-sim
 ```
 ## Build the Docker image:
