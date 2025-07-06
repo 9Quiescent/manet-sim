@@ -1,0 +1,1 @@
+print("MANET-Sim Docker container is working!")

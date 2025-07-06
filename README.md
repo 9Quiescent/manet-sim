@@ -24,6 +24,11 @@ After installing, launch Docker Desktop (if needed) and ensure the `docker` comm
 docker --version
 ```
 
+> **NOTE: Before running any Docker commands (USAGE WITH DOCKER), make sure Docker Desktop is installed and running.**
+> - On Mac, Linux and Windows, launch Docker Desktop from your Applications (or Start Menu) before opening your terminal.
+> - Wait until the Docker whale icon appears in your menu bar or system tray.
+> - Once running, the `docker` command will be available in your terminal.
+
 # USAGE WITHOUT DOCKER (Manual)
 ## Clone The Project
 Open A Terminal and run the following commands to clone the repository:
@@ -38,8 +43,10 @@ pip install -r requirements.txt
 ```
 ## Run The Simulator!
 Then run the simulator using this command.:
-
+```bash
 python main.py
+```
+
 
 # USAGE WITH DOCKER (Automatic)
 ## Clone The Project
@@ -48,11 +55,11 @@ Open A Terminal and run the following commands to clone the repository:
 git clone https://github.com/9Quiescent/manet-sim.git
 cd manet-sim
 ```
-## Build the Docker image:
+## Build the Docker image (Do this on the first run and anytime changes are made to the project):
 ```bash
 docker build -t manet-sim. (Dependencies Are automatically handled by the docker file.)
 ```
-## Run The Simulator!
+## Run The Simulator! (Do this everytime you want to run the project)
 ```bash
 docker run --rm -it manet-sim
 ```
@@ -62,7 +69,9 @@ Input validation on all node and message data.
 
 Basic message integrity check with SHA256 signatures.
 
-Static code analysis using Bandit (bandit -r .).
-
+Static code analysis using Bandit 
+```bash 
+bandit -r ..
+```
 # CREDITS
 Developed by Dennis Kalongonda
