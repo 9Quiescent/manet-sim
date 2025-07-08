@@ -25,6 +25,9 @@ class Node:
     def display_messages(self) -> None: # This function displays all of this node's messages.
         print(f"\n{self.node_name} messages: {self._messages}")
 
+    def display_neighbors(self) -> None:
+        print(f"{self.node_name} neighbors: {[n.node_name for n in self.neighbors]}")
+
     @property
     def node_id(self) -> int:
         return self._node_id
