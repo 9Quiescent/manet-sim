@@ -1,38 +1,51 @@
 from node import Node
-from network import Network
+from world import World
 
 def main():
-    # 1. Create a new network
-    net = Network()
+    # Create a 10x10 world
+    world = World(10, 10)
 
-    # 2. Create three nodes/devices
-    node1 = Node(1, "Dennis' iPhone", (100, 200))
-    node2 = Node(2, "Laptop", (150, 210))
-    node3 = Node(3, "Tablet", (400, 220))
+    # Add some walls
+    world.add_wall((3, 3))
+    world.add_wall((4, 4))
+    world.add_wall((5, 2))
+    print("Walls added.")
 
-    # 3. Add nodes to the network
-    net.add_node(node1)
-    net.add_node(node2)
-    net.add_node(node3)
+    # Add nodes/devices
+    n1 = Node(1, "Phone", (1, 1), comm_range=2)
+    n2 = Node(2, "Tablet", (2, 2), comm_range=2)
+    n3 = Node(3, "Laptop", (5, 5), comm_range=2)
+    n4 = Node(4, "SmartWatch", (8, 8), comm_range=2)
 
-    # 4. Detect neighbors based on initial positions
-    net.update_neighbors()
-    net.display_all_neighbors()
+    print("Spawning nodes.")
+    assert world.add_node(n1)
+    assert world.add_node(n2)
+    assert world.add_node(n3)
+    assert world.add_node(n4)
 
-    # 5. Move Tablet closer to the other devices
-    net.move_node(node3, (130, 205))
-    net.display_all_neighbors()
 
-    # 6. Attempt messaging
-    net.send_message(node1, node2, "Hey, Laptop! This is Dennis.")
-    net.send_message(node1, node3, "Hello Tablet, can you hear me?")
+    # Display initial state
+    print("\nInitial world state:")
+    world.display()
 
-    # 7. Remove the Laptop from the network and try messaging again
-    net.remove_node(node2)
-    net.send_message(node1, node2, "Are you still there, Laptop?")
+    # Simulate several steps
+    STEPS = 5
+    for t in range(1, STEPS + 1):
+        print(f"\n--- Step {t} ---")
+        world.step()
+        world.display()
+        print("Neighbor lists:")
+        world.network.display_all_neighbors()
+        print("-" * 40)
 
-    # 8. Display all messages stored at each node
-    net.display_all_messages()
+    # Demonstrate messaging between nodes that are neighbors
+    print("\nMessaging demonstration:")
+    world.network.send_message(n1, n2, "Hello from Phone to Tablet!")
+    world.network.send_message(n2, n3, "Tablet here, Laptop!")
+    world.network.send_message(n4, n1, "SmartWatch ping!")  # Might fail if not neighbors
+
+    print("\nAll messages:")
+    world.network.display_all_messages()
 
 if __name__ == "__main__":
     main()
