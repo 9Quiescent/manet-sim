@@ -6,14 +6,17 @@ An open-source, lightweight project for real-time visualisation and simulation o
 
 -**Peer-to-peer messaging:** Nodes within range can send and relay messages.
 
--**Dynamic topology:** Add/remove/move nodes to see the network adapt live.
+-**Opt-in participants:** Nodes can opt in or out of being ad-hoc participants.
 
--**Lightweight security:** Input validation, simple message signing, and static code analysis with Bandit.
+-**Dynamic topology:** Add and move nodes to see the network adapt live.
 
--**Docker-ready:** Run nodes in isolated containers to simulate distributed deployments.
+-**Lightweight security:** Simple encryption simulation.
+
+-**Docker-ready:** Project runs in a sandboxed container to simulate distributed deployments.
 
 ## Prerequisite: Docker Installation
-To avoid OS-specific quirks and needing to manually install dependencies, ensure you have docker installed to on your machine. This will let you run a sandboxed version of the program suited to your operating system, please install Docker for your platform:
+To avoid OS-specific quirks and needing to manually install dependencies, ensure you have docker installed to on your machine. 
+This will let you run a sandboxed version of the program suited to your operating system (at the cost of the GUI), please install Docker for your platform:
 
 - **[Docker Desktop for Mac](https://www.docker.com/products/docker-desktop/)**
 - **[Docker Desktop for Windows](https://www.docker.com/products/docker-desktop/)**
@@ -49,6 +52,7 @@ python main.py
 
 
 # USAGE WITH DOCKER (Automatic)
+## NOTE THAT RUNNING THE PROJECT THROUGH DOCKER PREVENTS THE GUI FROM WORKING DUE TO NO DISPLAY ACCESS.
 ## Clone The Project
 Open A Terminal and run the following commands to clone the repository:
 ```bash
@@ -65,9 +69,7 @@ docker run --rm -it manet-sim
 ```
 
 # BASIC SECURITY CONSIDERATIONS
-Input validation on all node and message data.
-
-Basic message integrity check with SHA256 signatures.
+Simulated E2EE  on the user end.
 
 Static code analysis using Bandit 
 ```bash 
