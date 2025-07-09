@@ -56,7 +56,7 @@ class World:
                 return
         # If no move possible, stay in place
 
-    def step(self) -> List:
+    def step(self) -> List[Tuple[Node, Tuple[int, int], Tuple[int, int]]]:
         """
         For each node in the network, plan a move to a random neighboring cell (if possible),
         while ensuring that:
@@ -96,7 +96,7 @@ class World:
                 moves.append((node, node.position, node.position))
                 reserved.add(node.position)  # Still reserve its current cell so others can't overlap it either.
         return moves
-    def display(self):
+    def display(self) -> None:
         """Text display of world state (for CLI/demo)."""
         print(f"World {self.width}x{self.height}")
         for node in self.network.nodes:
