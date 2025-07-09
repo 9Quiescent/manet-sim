@@ -29,7 +29,7 @@ class WorldGUI:
 
         self.step_button: tk.Button = tk.Button(
             self.root,
-            text="▶",  # Unicode play symbol
+            text="▶ SIMULATE STEP",
             command=self.do_step,
             bg=PICTO_BTN,
             fg="Black",
@@ -191,6 +191,13 @@ class WorldGUI:
         self.animate_node_color(node, fade_to_gray=not node.adhoc_enabled) # Call the fade animation to for gray
         self.world.network.update_neighbors() # Update the world's neighbors
         self.draw_world() # Update the GUI representation.
+        # Compose new log message
+        state = "enabled" if node.adhoc_enabled else "disabled"
+        self.log(f"\n{node.node_name} {state} ad-hoc mode, updating neighbors...\n")
+        # Now, show the current neighbor view for all nodes
+        for node in self.world.network.nodes:
+            neighbors = [n.node_name for n in node.neighbors]
+            self.log(f"{node.node_name} at {node.position} neighbors: {neighbors}")
 
     def show_inbox(self, node):
         # Retrieve the messages stored on the node (these are tuples of sender_id and text)
@@ -262,7 +269,7 @@ class WorldGUI:
 
         tk.Button(
             win,
-            text="←",
+            text="← BACK",
             command=win.destroy,
             bg=PICTO_BTN,
             fg="Black",
@@ -343,6 +350,9 @@ class WorldGUI:
             # Only send if both a recipient was found and the message isn't empty
             if recipient and msg:
                 self.world.network.send_message(node, recipient, msg)  # Passes message through the network
+                # Log the event as an E2EE-style delivery (no message content)
+                self.log(
+                    f"[SECURE MESSAGE] {node.node_name} → {recipient.node_name}: Message sent securely using E2EE protocol.")
                 self.picto_info(f"Sent to {recipient.node_name}: {msg}")  # Show confirmation dialog
             win.destroy()  # Always close the dialog after attempting to send
 
