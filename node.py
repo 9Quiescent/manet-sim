@@ -9,6 +9,7 @@ class Node:
         self._node_id: int = node_id # The node's (Device's) personal identifier, lets other nodes know who they are 'speaking' to.
         self._node_name: str = node_name # The name of the node/"Device" (, e.g, 'Dennis' iPhone)
         self._position: tuple[int, int] = position # A tuple representing the node's position on the 2D Map (x, y)
+        self.display_pos = (position[0], position[1]) # GUI position, used for smooth drawing.
         self._comm_range: int = comm_range # How close each node has to be to another node has to be in relation to another to communicate
         self._neighbors: List['Node'] = [] # A dynamic list that stores the nodes within this node's range
         self._messages: List[tuple[int, str]] = [] # A dynamically building list of node_ids (int) paired to messages (str).

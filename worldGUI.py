@@ -1,6 +1,7 @@
 import tkinter as tk
 from node import Node
 from world import World
+import time
 
 CELL_SIZE = 60  # The visual size/pixel size of each cell (position) on the 2D space
 
@@ -34,7 +35,7 @@ class WorldGUI:
         self.log_text.config(state='disabled') # Once added, it cannot be modified
         self.log_text.see('end')
 
-    def draw_world(self) -> None: # This function is used for rendering all of the objects on the play area (canvas), currently including nodes and walls.
+    def draw_world(self, animated: bool = False) -> None: # This function is used for rendering all of the objects on the play area (canvas), currently including nodes and walls.
         self.canvas.delete('all') # We start by clearing out the canvas (graphics, not the actual objects)
         # Draw walls (if any)
         for wx, wy in self.world.walls: # For the world's x-axis and y-axis of each of the world's walls
@@ -43,7 +44,10 @@ class WorldGUI:
         # Draw nodes
         colors = ['red', 'blue', 'green', 'orange', 'purple'] # A list of the available colors for nodes.
         for index, node in enumerate(self.world.network.nodes): # This loop takes the maps colors to nodes by their respective index. (index 0 in the node list will always be red)
-            x, y = node.position
+            if animated:
+                x, y = node.display_pos
+            else:
+                x, y = node.position
             x1, y1 = x * CELL_SIZE, y * CELL_SIZE
             color = colors[index % len(colors)]
             self.canvas.create_oval(x1 + 5, y1 + 5, x1 + CELL_SIZE - 5, y1 + CELL_SIZE - 5, fill=color)
@@ -51,13 +55,50 @@ class WorldGUI:
                                     font=('Arial', 12, 'bold'))
 
     def do_step(self) -> None: # This function is used for simulating the flow of time in the simulation.
-        self.step_count += 1 # Everytime we call this method, increase the step count by 1. (Used for the GUI)
-        self.world.step() # Call the actual world's step function.
-        self.draw_world() # Update the GUI
-        self.log(f"\n==== Step {self.step_count} ====") # Display the current step to the user end
-        for node in self.world.network.nodes: # For every node in the world
-            neighbors = [n.node_name for n in node.neighbors] # Assign a node name to in range nodes as "neighbors".
-            self.log(f"{node.node_name} at {node.position} neighbors: {neighbors}") # Display a device name and its neighbors.
+        self.step_count += 1  # Everytime we call this method, increase the step count by 1. (Used for the GUI)
+        moves = self.world.step()  # List of (node, old_pos, new_pos) for all nodes gets stored in a variable, moves
+        steps = 30  # Int variable for the amount of animation frames for a step (30)
+        delay = 1  # Int variable delay between frames (1).
+
+        # Set display_pos to old_pos for all nodes
+        for node, old_pos, new_pos in moves:
+            node.display_pos = old_pos
+
+        # Animate all nodes moving together
+        for frame in range(1, steps + 1):
+            for node, old_pos, new_pos in moves:
+                interp_x = old_pos[0] + (new_pos[0] - old_pos[0]) * frame / steps
+                interp_y = old_pos[1] + (new_pos[1] - old_pos[1]) * frame / steps
+                node.display_pos = (interp_x, interp_y)
+            self.draw_world(animated=True)
+            self.root.update()
+            self.root.after(delay)
+
+        # Snap display and logical positions to final value
+        for node, old_pos, new_pos in moves:
+            node.display_pos = new_pos
+            node._position = new_pos
+
+        self.world.network.update_neighbors()
+        self.draw_world(animated=False)
+        self.log(f"\n==== Step {self.step_count} ====")
+        for node in self.world.network.nodes:
+            neighbors = [n.node_name for n in node.neighbors]
+            self.log(f"{node.node_name} at {node.position} neighbors: {neighbors}")
+
+    def animate_node_move(self, node, new_pos, steps=10, delay=20):
+        x0, y0 = node.display_pos
+        x1, y1 = new_pos
+        for s in range(1, steps + 1):
+            interp_x = x0 + (x1 - x0) * s / steps
+            interp_y = y0 + (y1 - y0) * s / steps
+            node.display_pos = (interp_x, interp_y)
+            self.draw_world(animated=True)  # New: pass flag so node draws at display_pos
+            self.root.update()
+            self.root.after(delay)  # 1 ms delay per frame
+        node.display_pos = new_pos  # Snap to grid after anim
+        node._position = new_pos  # Snap logic position
+        self.draw_world(animated=False)
 
     def run(self) -> None: # Run the GUI, loop rendering until closed.
         self.root.mainloop()
