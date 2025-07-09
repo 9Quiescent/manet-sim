@@ -3,12 +3,12 @@ from world import World
 from tkinter import ttk
 
 CELL_SIZE = 60  # The visual size/pixel size of each cell (position) on the 2D space
-PICTO_BG      = "#eaf1fb"    # Main window background
-PICTO_BUBBLE  = "#b4e0ff"    # Your message bubble
-PICTO_BUBBLE2 = "#ffffff"    # Others' message bubble
-PICTO_BORDER  = "#aad0ee"
-PICTO_BTN     = "#5db9ff"
-PICTO_FONT    = "Helvetica"
+PICTO_BG      = "#eaf1fb"  # Primary background colour
+PICTO_BUBBLE  = "#b4e0ff"  # Colour of "bubbles"
+PICTO_BUBBLE2 = "#ffffff"  # Alternate bubble colour
+PICTO_BORDER  = "#aad0ee" # Primary border colour
+PICTO_BTN     = "#5db9ff" # Primary button colour
+PICTO_FONT    = "Helvetica" # Primary font
 
 
 class WorldGUI:
@@ -176,7 +176,7 @@ class WorldGUI:
                 break
 
     def show_node_menu(self, event, node): # This function is for rendering a drop down on the click of a node.
-        menu = tk.Menu(self.root, tearoff=0, font=("Segoe UI", 11))
+        menu = tk.Menu(self.root, tearoff=0, font=(PICTO_FONT, 11))
         menu.add_command(
             label="Toggle Adhoc Mode",
             command=lambda: self.toggle_adhoc_status(node)
