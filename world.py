@@ -6,7 +6,7 @@ from network import Network
 class World:
     """
     Represents the simulation world (arena) for MANET nodes.
-    Handles spatial logic: boundaries, collision, movement.
+    Handles spatial logic: boundaries, collision, movement. Determines what objects "exist".
     """
 
     def __init__(self, width: int, height: int):
@@ -15,13 +15,15 @@ class World:
         self.network: Network = Network()
         self.walls: List[Tuple[int, int]] = []  # Each wall is a coordinate (x, y)
 
-    def add_node(self, node: Node) -> bool:
-        """Add node if space is free and within bounds. Returns True if successful."""
-        if self.is_occupied(node.position) or not self.in_bounds(node.position):
-            print(f"Failed to add node {node.node_name} at {node.position}: space occupied or out of bounds.")
-            return False
+    # This is a factory function for creating nodes. The World governs what exists.
+    def create_node(self, node_id: int, node_name: str, position: tuple[int, int], comm_range: int = 100, base_color: str = "#ff0000") -> Node:
+        """Factory method to create, register, and return a Node."""
+        if self.is_occupied(position) or not self.in_bounds(position):
+            print(f"Failed to add node {node_name} at {position}: space occupied or out of bounds.")
+            return None
+        node = Node(node_id, node_name, position, comm_range, base_color)
         self.network.add_node(node)
-        return True
+        return node
 
     def add_wall(self, pos: Tuple[int, int]):
         """Add a wall (impassable space) at given coordinate."""
