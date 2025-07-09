@@ -37,6 +37,26 @@ class WorldGUI:
 
     def draw_world(self, animated: bool = False) -> None: # This function is used for rendering all of the objects on the play area (canvas), currently including nodes and walls.
         self.canvas.delete('all') # We start by clearing out the canvas (graphics, not the actual objects)
+
+        # Draw links between neighbors, representing devices that are in range of each other.
+        seen_pairs = set() # Collects pairs of nodes that have already had links drawn between each other.
+        for node in self.world.network.nodes:
+            x1, y1 = node.display_pos if animated else node.position
+            cx1 = x1 * CELL_SIZE + CELL_SIZE // 2
+            cy1 = y1 * CELL_SIZE + CELL_SIZE // 2
+            for neighbor in node.neighbors:
+                # To avoid drawing each connection twice:
+                pair = tuple(sorted([id(node), id(neighbor)]))
+                if pair in seen_pairs:
+                    continue
+                seen_pairs.add(pair)
+                x2, y2 = neighbor.display_pos if animated else neighbor.position
+                cx2 = x2 * CELL_SIZE + CELL_SIZE // 2
+                cy2 = y2 * CELL_SIZE + CELL_SIZE // 2
+                self.canvas.create_line(
+                    cx1, cy1, cx2, cy2,
+                    fill="#3399FF", width=5
+                )
         # Draw walls (if any)
         for wx, wy in self.world.walls: # For the world's x-axis and y-axis of each of the world's walls
             x1, y1 = wx * CELL_SIZE, wy * CELL_SIZE # Render the respective dimensions to scale with the size of each cell.
