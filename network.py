@@ -25,8 +25,18 @@ class Network:
         print("\nUpdating neighbor lists for all nodes in the network...")
         for node in self.nodes:
             node._neighbors = []
+            if not node.adhoc_enabled:
+                continue  # This device has adhoc disabled, so it can't see anyone
             for other in self.nodes:
-                if node is not other and self.in_range(node, other): # If the node is not in a node that is inside this network's node list, add it.
+                # A device is only considered a neighbor if:
+                # 1. It's not the same device,
+                # 2. It's within range,
+                # 3. The other device ALSO has adhoc enabled.
+                if (
+                        node is not other
+                        and other.adhoc_enabled
+                        and self.in_range(node, other)
+                ):
                     node._neighbors.append(other)
         print("Neighbor lists updated.")
 

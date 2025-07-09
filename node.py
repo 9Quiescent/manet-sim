@@ -5,7 +5,7 @@ class Node:
        Each node has an ID, name, 2D position, communication range, neighbors, and a message buffer.
        Nodes default to a communication range of 100.
     """
-    def __init__(self, node_id: int, node_name: str, position: tuple[int, int], comm_range: int =100):
+    def __init__(self, node_id: int, node_name: str, position: tuple[int, int], comm_range: int =100, base_color: str = "#ff0000"):
         self._node_id: int = node_id # The node's (Device's) personal identifier, lets other nodes know who they are 'speaking' to.
         self._node_name: str = node_name # The name of the node/"Device" (, e.g, 'Dennis' iPhone)
         self._position: tuple[int, int] = position # A tuple representing the node's position on the 2D Map (x, y)
@@ -13,6 +13,10 @@ class Node:
         self._comm_range: int = comm_range # How close each node has to be to another node has to be in relation to another to communicate
         self._neighbors: List['Node'] = [] # A dynamic list that stores the nodes within this node's range
         self._messages: List[tuple[int, str]] = [] # A dynamically building list of node_ids (int) paired to messages (str).
+        self.adhoc_enabled: bool = True # A boolean member to represent whether or not a device wants to be an adhoc participant
+        self.display_color: str = base_color # A string variable to represent the assigned colour of the device for the GUI. (Set at creation)
+        self.base_color = base_color
+
 
     def move(self, new_position: tuple[int, int]) -> None: # This function sets a new position value for the node that it is called on.
         original_position = self.position # Start by storing the position of the node before it moved
