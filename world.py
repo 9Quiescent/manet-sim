@@ -10,9 +10,9 @@ class World:
     """
 
     def __init__(self, width: int, height: int):
-        self.width = width
-        self.height = height
-        self.network = Network()
+        self.width: int = width
+        self.height: int = height
+        self.network: Network = Network()
         self.walls: List[Tuple[int, int]] = []  # Each wall is a coordinate (x, y)
 
     def add_node(self, node: Node) -> bool:

@@ -3,16 +3,16 @@ from node import Node
 
 class Network:
     """
-    Represents an ad hoc network of nodes/devices.
-    Handles neighbor relationships, message delivery, and node management.
+    Represents the wireless ether of nodes/devices. Waves are constantly being distributed by adhoc participants. (Whether current or future)
+    Therefore, this class handles neighbor relationships, message delivery, and node management.
     """
 
     def __init__(self):
         self.nodes: List[Node] = []
 
-    def add_node(self, new_neighbor: Node) -> None: #This function adds a node to this network's list of nodes (neighbors)
-        self.nodes.append(new_neighbor)
-        print(f"Node added to network: {new_neighbor.node_name} at position {new_neighbor.position}")
+    def add_node(self, new_node: Node) -> None: #This function adds a node to this network's list of nodes (neighbors)
+        self.nodes.append(new_node)
+        print(f"Node added to network: {new_node.node_name} at position {new_node.position}")
 
     def remove_node(self, node: Node) -> None: #This function removes a node from this network's list of neighbor
         if node in self.nodes: # Check if the node is already in the network's list of registered nodes.
@@ -26,7 +26,7 @@ class Network:
         for node in self.nodes:
             node._neighbors = []
             for other in self.nodes:
-                if node is not other and self.in_range(node, other): # If the node is not in a node that is inside this network's neighbor list, add it.
+                if node is not other and self.in_range(node, other): # If the node is not in a node that is inside this network's node list, add it.
                     node._neighbors.append(other)
         print("Neighbor lists updated.")
 
