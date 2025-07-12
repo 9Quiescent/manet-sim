@@ -69,7 +69,7 @@ docker run --rm -it manet-sim
 ```
 
 # BASIC SECURITY CONSIDERATIONS
-Simulated E2EE  on the user end.
+Simulated E2EE  on the user end in the GUI.
 
 Static code analysis using Bandit 
 ```bash 
