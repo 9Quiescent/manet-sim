@@ -15,8 +15,8 @@ An open-source, lightweight project for real-time visualisation and simulation o
 -**Docker-ready:** Project runs in a sandboxed container to simulate distributed deployments.
 
 ## Prerequisite: Docker Installation
-To avoid OS-specific quirks and needing to manually install dependencies, ensure you have docker installed to on your machine. 
-This will let you run a sandboxed version of the program suited to your operating system (at the cost of the GUI), please install Docker for your platform:
+To quickly test logic without dealing with OS-specific quirks and needing to manually install dependencies, ensure you have docker installed to on your machine. 
+This will let you run a sandboxed version of the program suited to your operating system (note that this is at the cost of the GUI), please install Docker for your platform:
 
 - **[Docker Desktop for Mac](https://www.docker.com/products/docker-desktop/)**
 - **[Docker Desktop for Windows](https://www.docker.com/products/docker-desktop/)**
@@ -32,7 +32,7 @@ docker --version
 > - Wait until the Docker whale icon appears in your menu bar or system tray.
 > - Once running, the `docker` command will be available in your terminal.
 
-# USAGE WITHOUT DOCKER (Manual)
+# USAGE WITHOUT DOCKER (Manual) - USE THIS FOR THE GUI.
 ## Clone The Project
 Open A Terminal and run the following commands to clone the repository:
 ```bash
@@ -52,7 +52,7 @@ python main.py
 
 
 # USAGE WITH DOCKER (Automatic)
-## NOTE THAT RUNNING THE PROJECT THROUGH DOCKER PREVENTS THE GUI FROM WORKING DUE TO NO DISPLAY ACCESS.
+## Note that using Docker here = No GUI, by default Docker has no display access.
 ## Clone The Project
 Open A Terminal and run the following commands to clone the repository:
 ```bash
